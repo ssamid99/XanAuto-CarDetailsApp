@@ -1,0 +1,84 @@
+﻿@model RegisterModel
+@{
+    ViewData["Title"] = "Qeydiyyat";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+
+</head>
+
+<body>
+    <form method="post" autocomplete="off">
+
+        <div>
+            <div>
+                <div>
+                    <div asp-validation-summary="All"></div>
+                    @if (!string.IsNullOrWhiteSpace(ViewBag.Message))
+                    {
+                        <div style="color:red">
+                            @ViewBag.Message
+                        </div>
+                    }
+                </div>
+                <div>
+                    <div>
+                        <h3>
+                            Register
+                        </h3>
+                        <h3>
+                            <a asp-action="Signin">SignIn</a>
+                        </h3>
+                    </div>
+                </div>
+                <div>
+                    <input placeholder=" Name" asp-for="Name">
+                </div>
+                <div>
+                    <input placeholder=" Surname" asp-for="Surname">
+                </div>
+                <div>
+                    <input placeholder=" EmaiL" asp-for="Email">
+                </div>
+                <div>
+                    <input type="password" placeholder="Password" asp-for="Password">
+                </div>
+                <div>
+                    <input type="password" placeholder="ConfirmPassword" asp-for="ConfirmPassword">
+                </div>
+                <div>
+                    <div>
+                        <div>
+                            <label>
+                                <input type="checkbox" value="">
+                                <span>
+                                    <i></i>
+                                </span>
+                                <span>Remember me</span>
+                            </label>
+                        </div>
+                        <div>
+                            <a href="auth-reset-password.html">
+                                Forgot
+                                Password?
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <button type="submit"> Sign in</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+
+
+</html>
