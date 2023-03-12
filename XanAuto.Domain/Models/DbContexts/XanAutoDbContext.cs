@@ -12,6 +12,8 @@ namespace XanAuto.Domain.Models.DbContexts
         {
         }
 
+        public DbSet<Currency> Currencies { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

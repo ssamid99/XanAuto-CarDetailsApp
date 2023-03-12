@@ -19,12 +19,16 @@ namespace XanAuto.Domain.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("XanAuto.Domain.Models.Entities.Membership.XanAutoForgotPassword", b =>
+            modelBuilder.Entity("XanAuto.Domain.Models.Entities.Currency", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CreatedByUserId")
                         .HasColumnType("int");
@@ -35,7 +39,7 @@ namespace XanAuto.Domain.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -43,7 +47,7 @@ namespace XanAuto.Domain.Migrations
 
                     b.HasIndex("CreatedByUserId");
 
-                    b.ToTable("XanAutoForgotPasswords");
+                    b.ToTable("Currencies");
                 });
 
             modelBuilder.Entity("XanAuto.Domain.Models.Entities.Membership.XanAutoRole", b =>
@@ -254,7 +258,46 @@ namespace XanAuto.Domain.Migrations
                     b.ToTable("UserTokens", "Membership");
                 });
 
-            modelBuilder.Entity("XanAuto.Domain.Models.Entities.Membership.XanAutoForgotPassword", b =>
+            modelBuilder.Entity("XanAuto.Domain.Models.Entities.Supplier", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CreatedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CurrencyId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Loan")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.ToTable("Suppliers");
+                });
+
+            modelBuilder.Entity("XanAuto.Domain.Models.Entities.Currency", b =>
                 {
                     b.HasOne("XanAuto.Domain.Models.Entities.Membership.XanAutoUser", "CreatedByUser")
                         .WithMany()
@@ -312,6 +355,23 @@ namespace XanAuto.Domain.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("XanAuto.Domain.Models.Entities.Supplier", b =>
+                {
+                    b.HasOne("XanAuto.Domain.Models.Entities.Membership.XanAutoUser", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId");
+
+                    b.HasOne("XanAuto.Domain.Models.Entities.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("Currency");
                 });
 #pragma warning restore 612, 618
         }

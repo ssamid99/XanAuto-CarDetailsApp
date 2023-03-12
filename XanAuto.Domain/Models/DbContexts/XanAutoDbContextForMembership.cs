@@ -12,6 +12,5 @@ namespace XanAuto.Domain.Models.DbContexts
         public DbSet<XanAutoUserLogin> XanAutoUserLogins { get; set; }
         public DbSet<XanAutoUserRole> XanAutoUserRoles { get; set; }
         public DbSet<XanAutoUserToken> XanAutoUserTokens { get; set; }
-        public DbSet<XanAutoForgotPassword> XanAutoForgotPasswords { get; set; }
     }
 }

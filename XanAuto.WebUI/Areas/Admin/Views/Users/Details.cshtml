@@ -1,0 +1,226 @@
+﻿@model XanAutoUser
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Detallı</h4>
+                    <span>
+                       @Model.Name @Model.Surname haqqında məlumat
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a asp-controller="Dashboard" asp-action="index">
+                            <i class="feather icon-home"></i>
+                        </a>
+                    </li>
+                    @if (User.HasAccess("admin.users.index"))
+                    {
+                        <li class="breadcrumb-item">
+                            <a asp-action="index">İstifadəçilər</a>
+                        </li>
+                    }
+                    <li class="breadcrumb-item">
+                        <span>@Model.Name</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <div class="card">
+        <div class="card-block">
+            <h4 class="sub-title">Detallı</h4>
+            <div>
+                <div class="form-group row">
+                    <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <p class="form-control">
+                            @Model.Name
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="Surname" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <p class="form-control">
+                            @Model.Surname
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="UserName" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <p class="form-control">
+                            @Model.UserName
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <p class="form-control">
+                            @Model.Email
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-12">
+                        <div class="tab-control" role="tabcontrol">
+                            <div class="tab-page" id="roles" aria-title="Roles" selected>
+                                <table class="table table-stripped">
+                                    <thead>
+                                        <tr>
+                                            <th class="table-row-select">
+
+                                            </th>
+                                            <th>
+                                                Ad
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (Tuple<int, string, bool> item in ViewBag.Roles)
+                                        {
+                                            <tr>
+                                                <td class="table-row-select">
+                                                    <input type="checkbox"
+                                                       @(item.Item3?"checked":"")
+                                                       data-role-id="@item.Item1"
+                                                       data-user-id="@Model.Id" />
+                                                </td>
+                                                <td>
+                                                    @item.Item2
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-page" id="principals" aria-title="Principals">
+                                <table class="table table-stripped">
+                                    <thead>
+                                        <tr>
+                                            <th class="table-row-select">
+
+                                            </th>
+                                            <th>
+                                                Ad
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (Tuple<string, bool> item in ViewBag.Principals)
+                                        {
+                                            <tr>
+                                                <td class="table-row-select">
+                                                    <input type="checkbox"
+                                                       @(item.Item2?"checked":"")
+                                                       data-user-id="@Model.Id"
+                                                       data-principal-name="@item.Item1" />
+                                                </td>
+                                                <td>
+                                                    @item.Item1
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-12 d-flex justify-content-end">
+                        @if (User.HasAccess("admin.users.index"))
+                        {
+                            <a asp-action="Index" class="btn btn-info">Geri</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section addcss{
+    <link href="~/lib/tab-control/tab-control.css" rel="stylesheet" />
+    <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" />
+}
+
+@section addjs{
+    <script src="~/lib/tab-control/tab-control.js"></script>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script src="~/lib/toastr.js/toastr.customize.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('input[type="checkbox"][data-role-id]').change(function (e) {
+                let obj = $(e.currentTarget).data();
+                obj.selected = $(e.currentTarget).is(':checked');
+                console.log(obj);
+
+                $.ajax({
+                    url: '@Url.Action("SetRole")',
+                    type: 'POST',
+                    data: obj,
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.error == false) {
+                            toastr.success(response.message, 'Successful operation!');
+                            return;
+                        }
+                        console.log(response);
+                        toastr.error(response.message, 'Unsuccessful operation!');
+
+                        $(e.currentTarget).prop('checked', !obj.selected);
+                        //toastr.success(response.message, 'Error has occured!');
+                    },
+                    error: function (response) {
+                        if (response.error == true) {
+                            toastr.error(response.message, 'Unsuccessful operation!');
+                            return;
+                        }
+                        toastr.success(response.message, 'Error has occured!');
+                    }
+                });
+            })
+
+
+            $('input[type="checkbox"][data-principal-name]').change(function (e) {
+                let obj = $(e.currentTarget).data();
+                obj.selected = $(e.currentTarget).is(':checked');
+                console.log(obj);
+
+                $.ajax({
+                    url: '@Url.Action("SetPrincipal")',
+                    type: 'POST',
+                    data: obj,
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.error == true) {
+                            console.log(response);
+                            toastr.error(response.message, 'Uğursuz Əməliyyat!');
+
+                            $(e.currentTarget).prop('checked', !obj.selected);
+                        }
+                    }
+                });
+            })
+        });
+    </script>
+}
+

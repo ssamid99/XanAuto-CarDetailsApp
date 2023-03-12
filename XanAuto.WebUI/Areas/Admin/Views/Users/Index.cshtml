@@ -1,0 +1,150 @@
+﻿@model IEnumerable<XanAutoUser>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>İstifadəçilər</h4>
+                    <span>
+                        Sistemdə olan istifadəçilər
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a asp-controller="Dashboard" asp-action="index">
+                            <i class="feather icon-home"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <span>İstifadəçilər</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <div class="card">
+        <div class="card-block table-border-style">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Ad
+                            </th>
+                            <th>
+                                Soyad
+                            </th>
+                            <th>
+                                İstifadəçi Adı
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Email Təsdiqlənib
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Surname)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @if (item.EmailConfirmed)
+                                    {
+                                        <span class="badge badge-success">Təsdiqlənib!</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-warning">Gözlənilir!</span>
+                                    }
+                                </td>
+                                <td class="operations">
+                                    @if (User.HasAccess("admin.users.details"))
+                                    {
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    }
+                                    @if (User.HasAccess("admin.users.delete"))
+                                    {
+                                        <a class="btn btn-sm btn-danger" onclick="removeEntity(@item.Id,'@item.Name')">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @Html.AntiForgeryToken()
+</div>
+
+@section addjs{
+    <script class="removeable">
+        function removeEntity(id, name) {
+            swal(`${name} adına olan reservasiyani silmək istədiyinizdən əminsiniz?`, {
+                title: "Diqqət!",
+                text: `${name} adına olan reservasiyani silmək istədiyinizdən əminsiniz?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                buttons: ["Xeyr", "Bəli"],
+            })
+                .then((value) => {
+
+                    if (value == true) {
+                        let vToken = $('[name=__RequestVerificationToken]').val();
+                        let formData = new FormData();
+                        formData.set('__RequestVerificationToken', vToken);
+                        formData.set('id', id);
+
+                        $.ajax({
+                            url: `@Url.Action("Delete")`,
+                            type: 'POST',
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            success: function (response) {
+                                console.log(response);
+                                if (response.error == true) {
+                                    toastr.error(response.message, 'Xeta');
+                                    return;
+                                }
+                                location.reload();
+                            },
+                            error: function (errorResponse) {
+                                console.error(errorResponse);
+                            }
+                        });
+                    }
+                });
+        }
+    </script>
+}
