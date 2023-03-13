@@ -23,11 +23,11 @@
         {
             get
             {
-                return this.pageSize < 5 ? 5 : this.pageSize;
+                return this.pageSize < 12 ? 12 : this.pageSize;
             }
             set
             {
-                if (value >= 5)
+                if (value >= 12)
                 {
                     this.pageSize = value;
                 }
