@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,8 @@ namespace XanAuto.Domain.Business.ProductModule
                 }
                 var query = db.Products
                     .Where(r => r.DeletedDate == null)
+                    .Include(r=>r.ProductCatalogItem)
+                    .OrderByDescending(r => r.Id)
                     .AsQueryable();
                 if (query == null)
                 {

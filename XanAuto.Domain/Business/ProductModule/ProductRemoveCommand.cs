@@ -32,6 +32,12 @@ namespace XanAuto.Domain.Business.ProductModule
                 }
 
                 data.DeletedDate = DateTime.UtcNow.AddHours(4);
+                var catalog = await db.ProductCatalogItem.FirstOrDefaultAsync(c => c.ProductId == request.Id && c.DeletedDate == null, cancellationToken);
+                if(catalog == null)
+                {
+                    return null;
+                }
+                catalog.DeletedDate = DateTime.UtcNow.AddHours(4);
                 await db.SaveChangesAsync(cancellationToken);
                 return data;
             }

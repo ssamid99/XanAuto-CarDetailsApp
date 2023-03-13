@@ -18,6 +18,7 @@ namespace XanAuto.Domain.Models.DbContexts
         public DbSet<Group> Groups { get; set; }
         public DbSet<Measure> Measures { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductCatalogItem> ProductCatalogItem { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -26,15 +26,7 @@ namespace XanAuto.Domain.Models.Entities
         public double RetailPrice { get; set; }
         public string Tag { get; set; }
         public string Description { get; set; }
-        public int ModelId { get; set; }
-        public Model Model { get; set; }
-        public int GroupId { get; set; }
-        public Group Group { get; set; }
-        public int MeasureId { get; set; }
-        public Measure Measure { get; set; }
-        public int CurrencyId { get; set; }
-        public Currency Currency { get; set; }
-        public int SupplierId { get; set; }
-        public Supplier Supplier { get; set; }
+        public string ImagePath { get; set; }
+        public virtual ICollection<ProductCatalogItem> ProductCatalogItem { get; set; }
     }
 }

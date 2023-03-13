@@ -25,12 +25,14 @@ namespace XanAuto.Domain.Business.ProductModule
             }
             public async Task<Product> Handle(ProductGetSingleQuery request, CancellationToken cancellationToken)
             {
-                var data = await db.Products.FirstOrDefaultAsync(p => p.Id == request.Id && p.DeletedDate == null, cancellationToken);
+                var data = db.Products
+                    .Include(p=>p.ProductCatalogItem)
+                    .AsQueryable();
                 if(data == null)
                 {
                     return null;
                 }
-                return data;
+                return await data.FirstOrDefaultAsync(p => p.Id == request.Id && p.DeletedDate == null, cancellationToken);
             }
         }
     }
