@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using XanAuto.Domain.Models.DbContexts;
 
 namespace XanAuto.Domain.Migrations
 {
     [DbContext(typeof(XanAutoDbContext))]
-    partial class XanAutoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230314203137_ProductsandOthers")]
+    partial class ProductsandOthers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -410,59 +412,6 @@ namespace XanAuto.Domain.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("XanAuto.Domain.Models.Entities.ProductCatalogItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CreatedByUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CurrencyId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("GroupId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MeasureId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ModelId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SupplierId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedByUserId");
-
-                    b.HasIndex("CurrencyId");
-
-                    b.HasIndex("GroupId");
-
-                    b.HasIndex("MeasureId");
-
-                    b.HasIndex("ModelId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("SupplierId");
-
-                    b.ToTable("ProductCatalogItem");
-                });
-
             modelBuilder.Entity("XanAuto.Domain.Models.Entities.Supplier", b =>
                 {
                     b.Property<int>("Id")
@@ -598,63 +547,6 @@ namespace XanAuto.Domain.Migrations
                     b.Navigation("CreatedByUser");
                 });
 
-            modelBuilder.Entity("XanAuto.Domain.Models.Entities.ProductCatalogItem", b =>
-                {
-                    b.HasOne("XanAuto.Domain.Models.Entities.Membership.XanAutoUser", "CreatedByUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedByUserId");
-
-                    b.HasOne("XanAuto.Domain.Models.Entities.Currency", "Currency")
-                        .WithMany("ProductCatalogItem")
-                        .HasForeignKey("CurrencyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("XanAuto.Domain.Models.Entities.Group", "Group")
-                        .WithMany("ProductCatalogItem")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("XanAuto.Domain.Models.Entities.Measure", "Measure")
-                        .WithMany("ProductCatalogItem")
-                        .HasForeignKey("MeasureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("XanAuto.Domain.Models.Entities.Model", "Model")
-                        .WithMany("ProductCatalogItem")
-                        .HasForeignKey("ModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("XanAuto.Domain.Models.Entities.Product", "Product")
-                        .WithMany("ProductCatalogItem")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("XanAuto.Domain.Models.Entities.Supplier", "Supplier")
-                        .WithMany("ProductCatalogItem")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CreatedByUser");
-
-                    b.Navigation("Currency");
-
-                    b.Navigation("Group");
-
-                    b.Navigation("Measure");
-
-                    b.Navigation("Model");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Supplier");
-                });
-
             modelBuilder.Entity("XanAuto.Domain.Models.Entities.Supplier", b =>
                 {
                     b.HasOne("XanAuto.Domain.Models.Entities.Membership.XanAutoUser", "CreatedByUser")
@@ -670,36 +562,6 @@ namespace XanAuto.Domain.Migrations
                     b.Navigation("CreatedByUser");
 
                     b.Navigation("Currency");
-                });
-
-            modelBuilder.Entity("XanAuto.Domain.Models.Entities.Currency", b =>
-                {
-                    b.Navigation("ProductCatalogItem");
-                });
-
-            modelBuilder.Entity("XanAuto.Domain.Models.Entities.Group", b =>
-                {
-                    b.Navigation("ProductCatalogItem");
-                });
-
-            modelBuilder.Entity("XanAuto.Domain.Models.Entities.Measure", b =>
-                {
-                    b.Navigation("ProductCatalogItem");
-                });
-
-            modelBuilder.Entity("XanAuto.Domain.Models.Entities.Model", b =>
-                {
-                    b.Navigation("ProductCatalogItem");
-                });
-
-            modelBuilder.Entity("XanAuto.Domain.Models.Entities.Product", b =>
-                {
-                    b.Navigation("ProductCatalogItem");
-                });
-
-            modelBuilder.Entity("XanAuto.Domain.Models.Entities.Supplier", b =>
-                {
-                    b.Navigation("ProductCatalogItem");
                 });
 #pragma warning restore 612, 618
         }

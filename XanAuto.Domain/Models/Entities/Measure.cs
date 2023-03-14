@@ -10,5 +10,6 @@ namespace XanAuto.Domain.Models.Entities
     public class Measure : BaseEntity
     {
         public string Name { get; set; }
+        public virtual ICollection<ProductCatalogItem> ProductCatalogItem { get; set; }
     }
 }
