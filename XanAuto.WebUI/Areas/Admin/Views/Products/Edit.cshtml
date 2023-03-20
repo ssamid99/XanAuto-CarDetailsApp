@@ -1,0 +1,284 @@
+﻿@model ProductPutCommand
+
+@{
+    ViewData["Title"] = "Redaktə Et";
+}
+
+<h1>Redaktə Etmək</h1>
+
+<h4>Məhsul</h4>
+<hr />
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-controller="Dashboard" asp-action="index"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    @if (User.HasAccess("admin.products.index"))
+                    {
+                        <li class="breadcrumb-item" style="float: left;">
+                            <a asp-action="index">Məhsullar</a>
+                        </li>
+                    }
+                    <li class="breadcrumb-item" style="float: left;">
+                        <span>Redaktə Etmək</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+
+
+                    <div class="card-header-right">
+                        <i class="icofont icofont-spinner-alt-5"></i>
+                    </div>
+
+                </div>
+                <div class="card-block">
+                    <h4 class="sub-title">Basic Inputs</h4>
+
+                    <form method="post" autocomplete="off" enctype="multipart/form-data">
+                        <div asp-validation-summary="All"></div>
+                        <div class="form-group row">
+                            <label asp-for="Code" class="col-sm-2 col-form-label">Kod</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Code" class="form-control" />
+                                <span asp-validation-for="Code" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Brand" class="col-sm-2 col-form-label">Brend</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Brand" class="form-control" />
+                                <span asp-validation-for="Brand" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Oe" class="col-sm-2 col-form-label">Oe Kodu</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Oe" class="form-control" />
+                                <span asp-validation-for="Oe" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Name" class="col-sm-2 col-form-label">Adı</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Important" class="col-sm-2 col-form-label">Vacıb</label>
+                            <div class="col-sm-10">
+                                <select asp-for="Important" class="form-control select2">
+                                    <option selected disable>---Seçin---</option>
+                                    <option value="true">Bəli</option>
+                                    <option value="false">Xeyr</option>
+                                </select>
+                                <span asp-validation-for="Important" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Discount" class="col-sm-2 col-form-label">Endirim</label>
+                            <div class="col-sm-10">
+                                <select asp-for="Discount" class="form-control select2">
+                                    <option selected disable>---Seçin---</option>
+                                    <option value="true">Bəli</option>
+                                    <option value="false">Xeyr</option>
+                                </select>
+                                <span asp-validation-for="Discount" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Active" class="col-sm-2 col-form-label">Aktiv</label>
+                            <div class="col-sm-10">
+                                <select asp-for="Active" class="form-control select2">
+                                    <option selected disable>---Seçin---</option>
+                                    <option value="true">Bəli</option>
+                                    <option value="false">Xeyr</option>
+                                </select>
+                                <span asp-validation-for="Active" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Original" class="col-sm-2 col-form-label">Original</label>
+                            <div class="col-sm-10">
+                                <select asp-for="Original" class="form-control select2">
+                                    <option selected disable>---Seçin---</option>
+                                    <option value="true">Bəli</option>
+                                    <option value="false">Xeyr</option>
+                                </select>
+                                <span asp-validation-for="Original" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Amount" class="col-sm-2 col-form-label">Sayı</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Amount" class="form-control" />
+                                <span asp-validation-for="Amount" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Norm" class="col-sm-2 col-form-label">Norma</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Norm" class="form-control" />
+                                <span asp-validation-for="Norm" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Order" class="col-sm-2 col-form-label">Sifariş</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Order" class="form-control" />
+                                <span asp-validation-for="Order" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Cost" class="col-sm-2 col-form-label">A.Qiyməti</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Cost" class="form-control" />
+                                <span asp-validation-for="Cost" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="SellingPrice" class="col-sm-2 col-form-label">S.Qiyməti</label>
+                            <div class="col-sm-10">
+                                <input asp-for="SellingPrice" class="form-control" />
+                                <span asp-validation-for="SellingPrice" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="RetailPrice" class="col-sm-2 col-form-label">P.Qiyməti</label>
+                            <div class="col-sm-10">
+                                <input asp-for="RetailPrice" class="form-control" />
+                                <span asp-validation-for="RetailPrice" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="CurrencyId" class="col-sm-2 col-form-label">Valyuta</label>
+                            <div class="col-sm-10">
+                                <select asp-for="CurrencyId" class="form-control select2">
+                                    <option selected disable>---Seçin---</option>
+                                    @if (ViewBag.Currency != null)
+                                    {
+                                        @foreach (var item in ViewBag.Currency)
+                                        {
+                                            <option value="@item.Id">@item.Code</option>
+                                        }
+                                    }
+                                </select>
+                                <span asp-validation-for="CurrencyId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="MeasureId" class="col-sm-2 col-form-label">Ölçü Vahidi</label>
+                            <div class="col-sm-10">
+                                <select asp-for="MeasureId" class="form-control select2">
+                                    <option selected disable>---Seçin---</option>
+                                    @if (ViewBag.Measure != null)
+                                    {
+                                        @foreach (var item in ViewBag.Measure)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    }
+                                </select>
+                                <span asp-validation-for="MeasureId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="SupplierId" class="col-sm-2 col-form-label">Tədarükçülər</label>
+                            <div class="col-sm-10">
+                                <select asp-for="SupplierId" class="form-control select2">
+                                    <option selected disable>---Seçin---</option>
+                                    @if (ViewBag.Supplier != null)
+                                    {
+                                        @foreach (var item in ViewBag.Supplier)
+                                        {
+                                            <option value="@item.Id">@item.Name (@item.Loan)</option>
+                                        }
+                                    }
+                                </select>
+                                <span asp-validation-for="SupplierId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Tag" class="col-sm-2 col-form-label">Tag</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Tag" class="form-control" />
+                                <span asp-validation-for="Tag" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Description" class="col-sm-2 col-form-label">Description</label>
+                            <div class="col-sm-10">
+                                <textarea asp-for="Description" class="form-control" id="body"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Image</label>
+                            <div class="col-sm-10">
+                                <label class="image-viewer" for="image"></label>
+                                <input id="image" name="image" type="file" hidden />
+                                <span asp-validation-for="Image" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12 d-flex justify-content-end">
+                                <button class="btn btn-primary mr-2 fix-btn">Yadda Saxla</button>
+                                @if (User.HasAccess("admin.products.index"))
+                                {
+                                    <a asp-controller="products" asp-action="index" class="btn btn-info">Geri</a>
+                                }
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section addjs {
+    <script class="removeable" src="~/lib/ckeditor5/ckeditor.min.js"></script>
+    <script class="removeable" src="~/lib/select2/js/select2.full.min.js"></script>
+
+    <script>
+        let reader = new FileReader();
+        reader.addEventListener('load', function () {
+            let imageViewer = document.querySelector('.image-viewer');
+            imageViewer.setAttribute('style', `background-image:url(${reader.result})`);
+            //url(data;.....)
+            console.log(reader.result);
+        });
+        document.getElementById('image').addEventListener('change', function (e) {
+            console.log(e);
+            const selectedFile = e.currentTarget.files[0];
+            reader.readAsDataURL(selectedFile);
+        });
+        ClassicEditor
+            .create(document.querySelector('#body'))
+            .catch(error => {
+                console.error(error);
+            });
+        $('.select2').select2();
+    </script>
+}
+
+    @section addcss{
+    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css" />
+}

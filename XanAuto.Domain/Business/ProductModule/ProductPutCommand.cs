@@ -34,8 +34,6 @@ namespace XanAuto.Domain.Business.ProductModule
         public double RetailPrice { get; set; }
         public string Tag { get; set; }
         public string Description { get; set; }
-        public int ModelId { get; set; }
-        public int GroupId { get; set; }
         public int MeasureId { get; set; }
         public int CurrencyId { get; set; }
         public int SupplierId { get; set; }
@@ -82,12 +80,10 @@ namespace XanAuto.Domain.Business.ProductModule
                     return null;
                 }
 
-                if(request.ModelId != 0 || request.GroupId != 0 || request.MeasureId != 0 || request.CurrencyId != 0 || request.SupplierId != 0)
+                if(request.MeasureId != 0 || request.CurrencyId != 0 || request.SupplierId != 0)
                 {
                    db.ProductCatalogItem.Remove(catalog);
-
-                    catalog.ModelId = request.ModelId;
-                    catalog.GroupId = request.GroupId;
+                    catalog.ProductId = request.Id;
                     catalog.MeasureId = request.MeasureId;
                     catalog.CurrencyId = request.CurrencyId;
                     catalog.SupplierId = request.SupplierId;

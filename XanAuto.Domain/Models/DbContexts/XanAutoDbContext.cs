@@ -14,8 +14,6 @@ namespace XanAuto.Domain.Models.DbContexts
 
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<Model> Models { get; set; }
-        public DbSet<Group> Groups { get; set; }
         public DbSet<Measure> Measures { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCatalogItem> ProductCatalogItem { get; set; }

@@ -77,6 +77,7 @@ namespace XanAuto.WebUI.Areas.Admin.Controllers
             }
             var editCommand = new CurrencyPutCommand();
             editCommand.Name = currency.Name;
+            editCommand.Code = currency.Code;
             return View(editCommand);
         }
 

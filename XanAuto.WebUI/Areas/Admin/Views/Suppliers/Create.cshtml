@@ -1,19 +1,18 @@
-﻿@model CurrencyPostCommand
+﻿@model SupplierPostCommand
 
 @{
     ViewData["Title"] = "Əlavə Etmək";
 }
 
-<h1>Yeni Valyuta</h1>
+<h1>Yeni Tədarükçü</h1>
 
-<h4>Valyuta</h4>
+<h4>Tədarükçü</h4>
 <hr />
 <div class="page-header">
     <div class="row align-items-end">
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-
                 </div>
             </div>
         </div>
@@ -23,14 +22,14 @@
                     <li class="breadcrumb-item" style="float: left;">
                         <a asp-controller="Dashboard" asp-action="index"> <i class="feather icon-home"></i> </a>
                     </li>
-                    @if (User.HasAccess("admin.currencies.index"))
+                    @if (User.HasAccess("admin.suppliers.index"))
                     {
                         <li class="breadcrumb-item" style="float: left;">
-                            <a asp-action="index">Valyutalar</a>
+                            <a asp-action="index">Tədarükçülər</a>
                         </li>
                     }
                     <li class="breadcrumb-item" style="float: left;">
-                        <span>Yeni Valyuta</span>
+                        <span>Yeni Tədarükçü</span>
                     </li>
                 </ul>
             </div>
@@ -61,18 +60,41 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label asp-for="Code" class="col-sm-2 col-form-label">Kodu</label>
+                            <label asp-for="Surname" class="col-sm-2 col-form-label">Soyadı</label>
                             <div class="col-sm-10">
-                                <input asp-for="Code" class="form-control" />
-                                <span asp-validation-for="Code" class="text-danger"></span>
+                                <input asp-for="Surname" class="form-control" />
+                                <span asp-validation-for="Surname" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Loan" class="col-sm-2 col-form-label">Borc</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Loan" class="form-control" />
+                                <span asp-validation-for="Loan" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="CurrencyId" class="col-sm-2 col-form-label">Valyuta</label>
+                            <div class="col-sm-10">
+                                <select asp-for="CurrencyId" class="form-control select2">
+                                    <option selected disable>---Seçin---</option>
+                                    @if (ViewBag.Currency != null)
+                                    {
+                                        @foreach (var item in ViewBag.Currency)
+                                        {
+                                            <option value="@item.Id">@item.Code</option>
+                                        }
+                                    }
+                                </select>
+                                <span asp-validation-for="CurrencyId" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-12 d-flex justify-content-end">
                                 <button class="btn btn-primary mr-2 fix-btn">Yadda Saxla</button>
-                                @if (User.HasAccess("admin.currencies.index"))
+                                @if (User.HasAccess("admin.suppliers.index"))
                                 {
-                                    <a asp-controller="currencies" asp-action="index" class="btn btn-info">Geri</a>
+                                    <a asp-controller="supplier" asp-action="index" class="btn btn-info">Geri</a>
                                 }
                             </div>
                         </div>

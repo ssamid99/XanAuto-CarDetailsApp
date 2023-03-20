@@ -11,10 +11,6 @@ namespace XanAuto.Domain.Models.Entities
     {
         public int ProductId { get; set; }
         public virtual Product Product { get; set; }
-        public int ModelId { get; set; }
-        public virtual Model Model { get; set; }
-        public int GroupId { get; set; }
-        public virtual Group Group { get; set; }
         public int MeasureId { get; set; }
         public virtual Measure Measure { get; set; }
         public int CurrencyId { get; set; }

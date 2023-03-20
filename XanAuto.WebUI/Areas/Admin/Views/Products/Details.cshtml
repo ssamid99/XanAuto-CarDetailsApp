@@ -1,0 +1,209 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Detallı";
+}
+
+<h1>Detallı</h1>
+
+
+<h4>Məhsul</h4>
+<hr />
+<div class="page-wrapper">
+    <div class="page-header">
+        <div class="row align-items-end">
+            <div class="col-lg-8">
+                <div class="page-header-title">
+                    <div class="d-inline">
+                        <h4>Bootstrap Border Sizes</h4>
+                        <span>
+                            lorem ipsum dolor sit amet, consectetur adipisicing
+                            elit
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="page-header-breadcrumb">
+                    <ul class="breadcrumb-title">
+                        <li class="breadcrumb-item" style="float: left;">
+                            <a asp-controller="Dashboard" asp-action="index"> <i class="feather icon-home"></i> </a>
+                        </li>
+                        @if (User.HasAccess("admin.products.index"))
+                        {
+                            <li class="breadcrumb-item" style="float: left;">
+                                <a asp-action="index">Məhsullar</a>
+                            </li>
+                        }
+                        <li class="breadcrumb-item" style="float: left;">
+                            <span>Detallı</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Basic Form Inputs</h5>
+                        <span>
+                            Add class of <code>.form-control</code> with
+                            <code>&lt;input&gt;</code> tag
+                        </span>
+
+
+                        <div class="card-header-right">
+                            <i class="icofont icofont-spinner-alt-5"></i>
+                        </div>
+
+                    </div>
+                    <div class="card-block">
+                        <h4 class="sub-title">Basic Inputs</h4>
+
+                        <div>
+                            <div class="form-group row">
+                                <label asp-for="Code" class="col-sm-2 col-form-label"></label>
+                                <p class="fix-row">
+                                    @Model.Code
+                                </p>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Brand" class="col-sm-2 col-form-label"></label>
+                                <div class="fix-row">
+                                    @Html.Raw(Model.Brand);
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Oe" class="col-sm-2 col-form-label"></label>
+                                <div class="fix-row">
+                                    @Html.Raw(Model.Oe);
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+                                <div class="fix-row">
+                                    @Html.Raw(Model.Name);
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Important" class="col-sm-2 col-form-label"></label>
+                                <p class="fix-row">
+                                    @Model.Important
+                                </p>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Discount" class="col-sm-2 col-form-label"></label>
+                                <p class="fix-row">
+                                    @Model.Discount
+                                </p>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Active" class="col-sm-2 col-form-label"></label>
+                                <p class="fix-row">
+                                    @Model.Active
+                                </p>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Original" class="col-sm-2 col-form-label"></label>
+                                <p class="fix-row">
+                                    @Model.Original
+                                </p>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Amount" class="col-sm-2 col-form-label"></label>
+                                <p class="fix-row">
+                                    @Model.Amount
+                                </p>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Norm" class="col-sm-2 col-form-label"></label>
+                                <p class="fix-row">
+                                    @Model.Norm
+                                </p>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Order" class="col-sm-2 col-form-label"></label>
+                                <p class="fix-row">
+                                    @Model.Order
+                                </p>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Cost" class="col-sm-2 col-form-label"></label>
+                                <p class="fix-row">
+                                    @Model.Cost
+                                </p>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="SellingPrice" class="col-sm-2 col-form-label"></label>
+                                <p class="fix-row">
+                                    @Model.SellingPrice
+                                </p>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="RetailPrice" class="col-sm-2 col-form-label"></label>
+                                <p class="fix-row">
+                                    @Model.RetailPrice
+                                </p>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Tag" class="col-sm-2 col-form-label"></label>
+                                <p class="fix-row">
+                                    @Model.Tag
+                                </p>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Description" class="col-sm-2 col-form-label"></label>
+                                <div class="fix-row">
+                                    @Html.Raw(Model.Description);
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="CreatedByUserId" class="col-sm-2 col-form-label"></label>
+                                <div class="fix-row">
+                                    @Html.Raw(Model.CreatedByUser.Name);
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="CreatedDate" class="col-sm-2 col-form-label"></label>
+                                <div class="fix-row">
+                                    @Html.Raw(Model.CreatedDate);
+                                </div>
+                            </div>
+                            @if (Model.DeletedDate != null)
+                            {
+                                <div class="form-group row">
+                                    <label asp-for="DeletedDate" class="col-sm-2 col-form-label"></label>
+                                    <div class="fix-row">
+                                        @Html.Raw(Model.DeletedDate);
+                                    </div>
+                                </div>
+                            }
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Image</label>
+                                <div class="col-sm-10">
+                                    <label class="image-viewer" style="background-image:url(/uploads/images/@Model.ImagePath)"></label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-12 d-flex justify-content-end">
+                                    @if (User.HasAccess("admin.products.edit"))
+                                    {
+                                        <a asp-action="edit" name="" asp-route-id=@Model.Id class="btn btn-warning mr-2 fix-btn">Redaktə Et</a>
+                                    }
+                                    @if (User.HasAccess("admin.products.index"))
+                                    {
+                                        <a asp-controller="products" asp-action="index" class="btn btn-info">Geri</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

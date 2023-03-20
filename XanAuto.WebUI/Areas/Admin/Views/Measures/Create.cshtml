@@ -1,44 +1,78 @@
-﻿@model XanAuto.Domain.Models.Entities.Measure
+﻿@model MeasurePostCommand
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Əlavə Etmək";
 }
 
-<h1>Create</h1>
+<h1>Yeni Ölçü</h1>
 
-<h4>Measure</h4>
+<h4>Ölçü Vahidi</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="CreatedByUserId" class="control-label"></label>
-                <select asp-for="CreatedByUserId" class ="form-control" asp-items="ViewBag.CreatedByUserId"></select>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-controller="Dashboard" asp-action="index"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    @if (User.HasAccess("admin.measures.index"))
+                    {
+                        <li class="breadcrumb-item" style="float: left;">
+                            <a asp-action="index">Ölçü Vahidləri</a>
+                        </li>
+                    }
+                    <li class="breadcrumb-item" style="float: left;">
+                        <span>Yeni Ölçü</span>
+                    </li>
+                </ul>
             </div>
-            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+
+
+                    <div class="card-header-right">
+                        <i class="icofont icofont-spinner-alt-5"></i>
+                    </div>
+
+                </div>
+                <div class="card-block">
+                    <h4 class="sub-title">Basic Inputs</h4>
+
+                    <form method="post" autocomplete="off" enctype="multipart/form-data">
+                        <div class="form-group row">
+                            <label asp-for="Name" class="col-sm-2 col-form-label">Adı</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12 d-flex justify-content-end">
+                                <button class="btn btn-primary mr-2 fix-btn">Yadda Saxla</button>
+                                @if (User.HasAccess("admin.measures.index"))
+                                {
+                                    <a asp-controller="measures" asp-action="index" class="btn btn-info">Geri</a>
+                                }
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="DeletedDate" class="control-label"></label>
-                <input asp-for="DeletedDate" class="form-control" />
-                <span asp-validation-for="DeletedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 

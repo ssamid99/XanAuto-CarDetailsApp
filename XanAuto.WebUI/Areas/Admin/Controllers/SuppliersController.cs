@@ -1,54 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using XanAuto.Domain.Business.ModelModule;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using XanAuto.Domain.Business.SupplierModule;
 using XanAuto.Domain.Models.DbContexts;
-using XanAuto.Domain.Models.Entities;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace XanAuto.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ModelsController : Controller
+    public class SuppliersController : Controller
     {
         private readonly XanAutoDbContext db;
         private readonly IMediator mediator;
 
-        public ModelsController(XanAutoDbContext db, IMediator mediator)
+        public SuppliersController(XanAutoDbContext db, IMediator mediator)
         {
             this.db = db;
             this.mediator = mediator;
         }
 
-        // GET: Admin/Models
-        [Authorize("admin.models.index")]
-        public async Task<IActionResult> Index(ModelGetAllQuery query)
+        // GET: Admin/Suppliers
+        [Authorize("admin.suppliers.index")]
+        public async Task<IActionResult> Index(SupplierGetAllQuery query)
         {
             var response = await mediator.Send(query);
+            ViewBag.GetCName = new Func<int, string>(GetCName);
             return View(response);
         }
 
-        // GET: Admin/Models/Create
-        [Authorize("admin.models.create")]
-        public IActionResult Create()
+
+        // GET: Admin/Suppliers/Create
+        [Authorize("admin.suppliers.create")]
+        public async Task<IActionResult> Create()
         {
+            ViewBag.Currency = await db.Currencies.Where(c => c.DeletedDate == null).ToListAsync();
             return View();
         }
 
-        // POST: Admin/Models/Create
+        // POST: Admin/Suppliers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize("admin.models.create")]
-        public async Task<IActionResult> Create(ModelPostCommand command)
+        [Authorize("admin.suppliers.create")]
+        public async Task<IActionResult> Create(SupplierPostCommand command)
         {
             if (!ModelState.IsValid)
             {
@@ -56,13 +55,14 @@ namespace XanAuto.WebUI.Areas.Admin.Controllers
             }
             else
             {
+                ViewBag.Currency = await db.Currencies.Where(c => c.DeletedDate == null).ToListAsync();
                 var reponse = await mediator.Send(command);
                 return RedirectToAction(nameof(Index));
             }
         }
 
-        // GET: Admin/Models/Edit/5
-        [Authorize("admin.models.edit")]
+        // GET: Admin/Suppliers/Edit/5
+        [Authorize("admin.suppliers.edit")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -70,23 +70,28 @@ namespace XanAuto.WebUI.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var model = await db.Models.FindAsync(id);
-            if (model == null)
+            var supplier = await db.Suppliers.FindAsync(id);
+            if (supplier == null)
             {
                 return NotFound();
             }
-            var editCommand = new ModelPutCommand();
-            editCommand.Name = model.Name;
+            var editCommand = new SupplierPutCommand();
+            editCommand.Name = supplier.Name;
+            editCommand.Surname = supplier.Surname;
+            editCommand.Loan = supplier.Loan;
+            editCommand.CurrencyId = supplier.CurrencyId;
+
+            ViewBag.Currency = await db.Currencies.Where(c => c.DeletedDate == null).ToListAsync();
             return View(editCommand);
         }
 
-        // POST: Admin/Models/Edit/5
+        // POST: Admin/Suppliers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize("admin.models.edit")]
-        public async Task<IActionResult> Edit(ModelPutCommand command)
+        [Authorize("admin.suppliers.edit")]
+        public async Task<IActionResult> Edit(SupplierPutCommand command)
         {
             var response = await mediator.Send(command);
 
@@ -94,14 +99,15 @@ namespace XanAuto.WebUI.Areas.Admin.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Currency = await db.Currencies.Where(c => c.DeletedDate == null).ToListAsync();
             return View(command);
         }
 
-        // POST: Admin/Models/Delete/5
+        // POST: Admin/Suppliers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize("admin.models.delete")]
-        public async Task<IActionResult> DeleteConfirmed(ModelRemoveCommand command)
+        [Authorize("admin.suppliers.delete")]
+        public async Task<IActionResult> DeleteConfirmed(SupplierRemoveCommand command)
         {
             var response = await mediator.Send(command);
             if (response == null)
@@ -111,9 +117,10 @@ namespace XanAuto.WebUI.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ModelExists(int id)
+        public string GetCName(int id)
         {
-            return db.Models.Any(e => e.Id == id);
+            var data = db.Currencies.FirstOrDefault(c => c.Id == id && c.DeletedDate == null);
+            return data.Code;
         }
     }
 }

@@ -33,8 +33,6 @@ namespace XanAuto.Domain.Business.ProductModule
         public double RetailPrice { get; set; }
         public string Tag { get; set; }
         public string Description { get; set; }
-        public int ModelId { get; set; }
-        public int GroupId { get; set; }
         public int MeasureId { get; set; }
         public int CurrencyId { get; set; }
         public int SupplierId { get; set; }
@@ -72,16 +70,7 @@ namespace XanAuto.Domain.Business.ProductModule
                 entity.Tag = request.Tag;
                 entity.Description = request.Description;
                 entity.CreatedByUserId = ctx.GetCurrentUserId();
-
-                var catalog = new ProductCatalogItem();
-
-                catalog.ProductId = entity.Id;
-                catalog.ModelId = request.ModelId;
-                catalog.GroupId = request.GroupId;
-                catalog.MeasureId = request.MeasureId;
-                catalog.CurrencyId = request.CurrencyId;
-                catalog.SupplierId = request.SupplierId;
-
+                
                 if (request.Image == null)
                     goto end;
 
@@ -98,8 +87,15 @@ namespace XanAuto.Domain.Business.ProductModule
                 entity.ImagePath = request.ImagePath;
 
             end:
-
                 await db.Products.AddAsync(entity, cancellationToken);
+                await db.SaveChangesAsync(cancellationToken);
+                var catalog = new ProductCatalogItem();
+
+                catalog.ProductId = entity.Id;
+                catalog.MeasureId = request.MeasureId;
+                catalog.CurrencyId = request.CurrencyId;
+                catalog.SupplierId = request.SupplierId;
+
                 await db.ProductCatalogItem.AddAsync(catalog, cancellationToken);
                 await db.SaveChangesAsync(cancellationToken);
                 return entity;

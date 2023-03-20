@@ -1,10 +1,10 @@
-﻿@model IEnumerable<Currency>
+﻿@model PagedViewModel<Supplier>
 
 @{
-    ViewData["Title"] = "Valyuta";
+    ViewData["Title"] = "Tədarükçülər";
 }
 
-<h1>Valyuta</h1>
+<h1>Tədarükçülər</h1>
 
 @section addcss{
     <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css">
@@ -28,7 +28,7 @@
                             </li>
 
                             <li class="breadcrumb-item" style="float: left;">
-                                <span>Valyuta</span>
+                                <span>Tədarükçülər</span>
                             </li>
                         </ul>
                     </div>
@@ -48,14 +48,14 @@
                                         Adı
                                     </th>
                                     <th>
-                                        Kodu
+                                        Soyadı
                                     </th>
                                     <th>
-                                        CreatedDate
+                                        Borc
                                     </th>
 
                                     <th class="operations">
-                                    @if (User.HasAccess("admin.currencies.create"))
+                                    @if (User.HasAccess("admin.suppliers.create"))
                                     {
                                         <a asp-action="Create" class="btn btn-sm btn-primary">
                                             <i class="fa fa-plus"></i>
@@ -65,29 +65,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
+                            @foreach (var item in Model.Items)
                             {
                                 <tr>
                                     <td class="ellipse">
                                         @item.Name
                                     </td>
-                                    <td>
-                                        @item.Code
-                                    </td>
-
                                     <td class="ellipse ">
 
-                                        @item.CreatedDate
+                                        @item.Surname
 
+                                    </td>
+                                    <td>
+                                        @item.Loan @ViewBag.GetCName(item.CurrencyId)
                                     </td>
 
                                     <td class="operations table-imaged">
-                                        @if (User.HasAccess("admin.currencies.edit"))
+                                        @if (User.HasAccess("admin.suppliers.edit"))
                                         {
                                             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning"><i class="fa-solid fa-pencil"></i></a>
 
                                         }
-                                        @if (User.HasAccess("admin.currencies.delete"))
+                                        @if (User.HasAccess("admin.suppliers.delete"))
                                         {
                                             <a class="btn btn-sm btn-danger" onclick="removeEntity(@item.Id, '@item.Name')"><i class="fa-solid fa-trash-can"></i></a>
                                         }
@@ -96,6 +95,7 @@
                             }
                         </tbody>
                     </table>
+                    @Model.GetPager(Url, "Index", "Admin")
                 </div>
             </div>
         </div>

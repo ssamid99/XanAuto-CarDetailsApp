@@ -30,6 +30,7 @@ namespace XanAuto.Domain.Business.SupplierModule
                     return null;
                 }
                 data.DeletedDate = DateTime.UtcNow.AddHours(4);
+                await db.SaveChangesAsync(cancellationToken);
                 return data;
             }
         }

@@ -13,23 +13,23 @@
                     </a>
                 </li>
             }
-            @if (User.HasAccess("admin.reservations.index"))
+            @if (User.HasAccess("admin.products.index"))
             {
                 <li class="pcoded-hasmenu" dropdown-icon="style1" subitem-icon="style1">
                     <a href="javascript:void(0)">
-                        <span class="pcoded-micon"><i class="feather icon-book"></i></span>
-                        <span class="pcoded-mtext">Rezervasiyalar</span>
+                        <span class="pcoded-micon"><i class="feather icon-package"></i></span>
+                        <span class="pcoded-mtext">Məhsullar</span>
                         <span class="pcoded-mcaret"></span>
                     </a>
                     <ul class="pcoded-submenu">
                         <li>
-                            <a asp-controller="reservations" asp-action="index">
-                                <span class="pcoded-mtext">Aktiv rezervasiyalar</span>
+                            <a asp-controller="products" asp-action="index">
+                                <span class="pcoded-mtext">Aktiv məhsullar</span>
                             </a>
                         </li>
                         <li>
-                            <a asp-controller="reservations" asp-action="deletedindex">
-                                <span class="pcoded-mtext">Kecmiş rezervasiyalar</span>
+                            <a asp-controller="products" asp-action="deletedindex">
+                                <span class="pcoded-mtext">Kecmiş məhsullar</span>
                             </a>
                         </li>
                     </ul>
@@ -57,14 +57,14 @@
                     </a>
                 </li>
             }
-            @if (User.HasAccess("admin.people.index"))
+            @if (User.HasAccess("admin.suppliers.index"))
             {
                 <li>
-                    <a asp-controller="People" asp-action="index">
+                    <a asp-controller="suppliers" asp-action="index">
                         <span class="pcoded-micon">
                             <i class="feather icon-users"></i>
                         </span>
-                        <span class="pcoded-mtext">Əlavə Qonaq Növləri</span>
+                        <span class="pcoded-mtext">Tədarükçülər</span>
                     </a>
                 </li>
             }
@@ -101,57 +101,29 @@
                     </a>
                 </li>
             }
-            @if (User.HasAccess("admin.radissonhotels.index") || User.HasAccess("admin.abouts.index") || User.HasAccess("admin.teams.index") || User.HasAccess("admin.servicesheaders.index") || User.HasAccess("admin.servicesbody.index"))
+            @if (User.HasAccess("admin.currencies.index") || User.HasAccess("admin.measures.index"))
             {
                 <li class="pcoded-hasmenu" dropdown-icon="style1" subitem-icon="style1">
                     <a href="javascript:void(0)">
-                        <span class="pcoded-micon"><i class="feather icon-info"></i></span>
-                        <span class="pcoded-mtext">Radisson Hotel</span>
+                        <span class="pcoded-micon"><i class="feather icon-briefcase"></i></span>
+                        <span class="pcoded-mtext">Alətlər</span>
                         <span class="pcoded-mcaret"></span>
                     </a>
                     <ul class="pcoded-submenu">
-                        @if (User.HasAccess("admin.radissonhotels.index"))
+                        @if (User.HasAccess("admin.currencies.index"))
                         {
                             <li>
-                                <a asp-controller="RadissonHotels" asp-action="index">
-                                    <span class="pcoded-mtext">Otel Haqqında</span>
+                                <a asp-controller="currencies" asp-action="index">
+                                    <span class="pcoded-mtext">Valyuta</span>
                                 </a>
                             </li>
                         }
-                        @if (User.HasAccess("admin.abouts.index"))
+                        @if (User.HasAccess("admin.measures.index"))
                         {
                             <li>
-                                <a asp-controller="Abouts" asp-action="index">
-                                    <span class="pcoded-mtext">Otel Qeydləri</span>
+                                <a asp-controller="measures" asp-action="index">
+                                    <span class="pcoded-mtext">Ölçü Vahidləri</span>
                                 </a>
-                            </li>
-                        }
-                        @if (User.HasAccess("admin.teams.index"))
-                        {
-                            <li>
-                                <a asp-controller="Teams" asp-action="index">
-                                    <span class="pcoded-mtext">Komanda</span>
-                                </a>
-                            </li>
-                        }
-                        @if (User.HasAccess("admin.servicesheaders.index") || User.HasAccess("admin.servicesbody.index"))
-                        {
-                            <li class="pcoded-hasmenu" dropdown-icon="style1" subitem-icon="style1">
-                                <a href="javascript:void(0)">
-                                    <span>Xidmətlər</span>
-                                </a>
-                                <ul class="pcoded-submenu">
-                                    <li>
-                                        <a asp-controller="ServicesHeaders" asp-action="index">
-                                            <span class="pcoded-mtext">Başlıq</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a asp-controller="ServicesBodies" asp-action="index">
-                                            <span class="pcoded-mtext">Əsas Hissə</span>
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                         }
                     </ul>
